@@ -1,0 +1,101 @@
+<section>
+<br>
+<div class="text-shadow-md flex items-center justify-center text-4xl text-gray-500">
+    <h1>Lista de Super Heroes</h1>
+</div>
+<br>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-100 dark:text-gray-500">
+        <thead class="text-xs text-blue uppercase bg-gray-900 border-b border-black-400 dark:text-black">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nombre del Super Heroe
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Nombre Real
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Planeta de Origen
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Debilidad
+                </th>
+                <!--<th scope="col" class="px-6 py-3">
+                    Poderes
+                </th>-->
+                <!--<th scope="col" class="px-6 py-3">
+                    Aliados
+                </th>-->
+                <!--<th scope="col" class="px-6 py-3">
+                    Enemigos
+                </th>-->
+                <th scope="col" class="px-6 py-3">
+                    Edad
+                </th>
+                <th scope="col" class="px-8 py-5">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <% superheroesFormateados.forEach( (heroe) => { %>
+        <tbody>
+            <tr class=" bg-gray-600 border-b border-blue-400 hover:bg-gray-400">
+                <th scope="row" class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
+                    <%= heroe.Nombre %>
+                </th>
+                <td class="px-6 py-4">
+                    <%= heroe["Nombre Real"] %>
+                </td>
+                <td class="px-6 py-4">
+                    <%= heroe["Planeta de Origen"] %>
+                </td>
+                <td class="px-6 py-4">
+                    <%= heroe.Debilidad %>
+                </td>
+                <!--<td class="px-5 py-4">
+                    <%= heroe.Poderes %>
+                </td>-->
+                <!--<td class="px-6 py-4">
+                    <%= heroe.Aliados %>
+                </td>-->
+                <!--<td class="px-6 py-4">
+                    <%= heroe.Enemigos %>
+                </td>-->
+                <td class="px-6 py-4">
+                    <%= heroe.Edad %>
+                </td>
+                <td class="px-8 py-5">                    
+                    <a  onclick="editar('<%= heroe.id %>')" class="font-medium text-white hover:underline hover:cursor-pointer">Edit |</a>
+                    <a onclick="eliminar('<%= heroe.id %>')" class="font-medium text-white hover:underline hover:cursor-pointer">Eliminar</a>
+                </td>               
+            </tr>            
+        </tbody>        
+        <% }) %>
+    </table>
+</div>
+<script>
+    function editar(id){
+            window.location.href = '/heroes/modificar/' + id;
+        }
+    function eliminar(id){
+            if (!confirm("¿Estás seguro que querés eliminar este superhéroe? Esta acción no se puede deshacer.")) {
+                return;
+            }
+            const requestOptions = {
+                method:'delete',               
+            }
+            fetch('/heroes/eliminar/id/' + id, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.result == 'success'){
+                        window.location.href = '/heroes'
+                    }
+                    else{
+                        alert("Surgio un Error al Eliminar el Super Heroe")
+                    }
+                })
+        }
+</script>
+<br>    
+</section>

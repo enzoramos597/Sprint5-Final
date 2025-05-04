@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Agregar el SuperHeroe</h1>
+    <div>
+       
+        Nombre del Super Heroe: 
+        <input id="nombreSuperHeroe" value=""> 
+        <span id="error-nombreSuperHeroe" class="error" style="color:red"></span>
+        <br><br>
+        
+        Nombre Real: 
+        <input id="nombreReal" value=""> 
+        <span id="error-nombreReal" class="error" style="color:red"></span>
+        <br><br>
+        
+        Edad: 
+        <input id="edad" value=""> 
+        <span id="error-edad" class="error" style="color:red"></span>
+        <br><br>
+        
+        Planeta de Origen: 
+        <input id="planetaOrigen" value=""> 
+        <span id="error-planetaOrigen" class="error" style="color:red"></span>
+        <br><br>
+        
+        Debilidad: 
+        <input id="debilidad" value=""> 
+        <span id="error-debilidad" class="error" style="color:red"></span>
+        <br><br>
+        
+        Poderes: 
+        <input id="poderes" value=""> 
+        <span id="error-poderes" class="error" style="color:red"></span>
+        <br><br>
+        
+        Aliados: 
+        <input id="aliados" value=""> 
+        <span id="error-aliados" class="error" style="color:red"></span>
+        <br><br>
+        
+        Enemigos: 
+        <input id="enemigos" value=""> 
+        <span id="error-enemigos" class="error" style="color:red"></span>
+        <br><br>
+        
+        Creador: 
+        <input id="creador" value="">
+        <span id="error-creador" class="error" style="color:red"></span>
+        <br><br><br>
+         
+        <button onclick="Guardar()">Guardar</button>
+        <button onclick="window.location = '../../'">Cancelar</button>     
+    </div>
+    <script>
+        
+    function Guardar() {
+        // Limpiar errores anteriores
+        if (!confirm("¿Estás seguro que querés agregar este superhéroe?")) {
+        return; // Detiene la acción
+        }
+        document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+        // Capturar valores del formulario
+        const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();
+        const nombreReal = document.getElementById('nombreReal').value.trim();
+        const edad = parseInt(document.getElementById('edad').value.trim());
+        const planetaOrigen = document.getElementById('planetaOrigen').value.trim();
+        const debilidad = document.getElementById('debilidad').value.trim();
+        const poderes = document.getElementById('poderes').value.trim().split(',').map(p => p.trim());
+        const aliados = document.getElementById('aliados').value.trim().split(',').map(a => a.trim());
+        const enemigos = document.getElementById('enemigos').value.trim().split(',').map(e => e.trim());
+        const creador = document.getElementById('creador').value.trim();
+
+        let errores = [];
+
+        // Validaciones
+        if (nombreSuperHeroe.length < 3 || nombreSuperHeroe.length > 60) {
+            errores.push({ field: "nombreSuperHeroe", message: "Debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (nombreReal.length < 3 || nombreReal.length > 60) {
+            errores.push({ field: "nombreReal", message: "Debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (isNaN(edad) || edad < 1 || edad > 150) {
+            errores.push({ field: "edad", message: "Debe ser un número válido entre 1 y 150." });
+        }
+
+        if (planetaOrigen.length < 3 || planetaOrigen.length > 60) {
+            errores.push({ field: "planetaOrigen", message: "Debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (debilidad.length < 3 || debilidad.length > 60) {
+            errores.push({ field: "debilidad", message: "Debe tener entre 3 y 60 caracteres." });
+        }
+        /*if (!Array.isArray(poderes) || poderes.length === 0 || poderes.some(p => p.length < 3 || p.length > 60)) {
+            errores.push({ field: "poderes", message: "Cada poder debe tener entre 3 y 60 caracteres." });
+        }*/
+        if (!Array.isArray(poderes) || poderes.length < 2 || poderes.some(p => p.length < 3 || p.length > 60)) {
+            errores.push({ field: "poderes", message: "Debés ingresar al menos 2 poderes, y cada uno debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (!Array.isArray(aliados) || aliados.length === 0 || aliados.some(a => a.length < 3 || a.length > 60)) {
+            errores.push({ field: "aliados", message: "Cada aliado debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (!Array.isArray(enemigos) || enemigos.length === 0 || enemigos.some(e => e.length < 3 || e.length > 60)) {
+            errores.push({ field: "enemigos", message: "Cada enemigo debe tener entre 3 y 60 caracteres." });
+        }
+
+        if (creador.length < 3 || creador.length > 60) {
+            errores.push({ field: "creador", message: "Debe tener entre 3 y 60 caracteres." });
+        }
+
+        // Mostrar errores si hay
+        if (errores.length > 0) {
+            errores.forEach(error => {
+                const span = document.getElementById(`error-${error.field}`);
+                if (span) span.textContent = error.message;
+            });
+            alert("Por favor, corregí los errores antes de guardar.");
+            return; // Evita enviar la petición
+        }
+
+        // Si pasa validación, hacemos fetch al servidor
+        const requestOptions = {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nombreSuperHeroe,
+                nombreReal,
+                edad,
+                planetaOrigen,
+                debilidad,
+                poderes,
+                aliados,
+                enemigos,
+                creador
+            })
+        };
+
+        fetch('/heroes/nuevo/agregarheroes', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    window.location.href = '../../';
+                } else if (data.status === 'error' && data.errors) {
+                    data.errors.forEach(error => {
+                        const errorSpan = document.getElementById(`error-${error.field}`);
+                        if (errorSpan) errorSpan.textContent = error.message;
+                    });
+                    alert("Errores desde el servidor. Verificá los campos.");
+                } else {
+                    alert("Error inesperado.");
+                }
+            });
+    }
+</script>
+
+       
+
+ 
+        <!--function Guardar(){
+        //console.log('Guardar ID:', id);
+            const requestOptions = {
+                method:'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                nombreSuperHeroe: document.getElementById('nombreSuperHeroe').value,    
+                nombreReal: document.getElementById('nombreReal').value, 
+                edad: document.getElementById('edad').value,                 
+                planetaOrigen: document.getElementById('planetaOrigen').value,
+                debilidad: document.getElementById('debilidad').value,
+                poderes: document.getElementById('poderes').value.split(','),
+                aliados: document.getElementById('aliados').value.split(','),
+                enemigos: document.getElementById('enemigos').value.split(','),
+                creador: document.getElementById('creador').value,                
+            })            
+            }
+            fetch('/heroes/nuevo/agregarheroes', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.result == 'success'){
+                        window.location.href = '/heroes'
+                    }
+                    else{
+                        alert("Surgio un Error al actualizar la información")
+                    }
+                })
+        }*/-->
+
+       
+</body>
+</html>

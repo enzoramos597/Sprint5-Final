@@ -1,0 +1,202 @@
+<section>
+        <br>
+        <div class="container ml-auto mr-auto flex flex-wrap items-start mt-0">
+      
+          <div class="w-full pl-2 pr-2 mb-4 mt-4">
+            <h1 class="text-3xl font-extrabold text-center"> Modificar Super Heroe - Completar los Campos </h1>
+          </div>
+          
+        </div> 
+        
+        <div class="container ml-auto mr-auto flex items-center justify-center">
+          <div class="w-full md:w-1/2">
+      
+            <!-- Formulario -->
+            <form class="bg-white px-8 pt-6 pb-8 mb-4">
+              <div class="mb-4">
+                <div class="grid grid-flow-row sm:grid-flow-col gap-3">
+                  <div class="sm:col-span-4 justify-center">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombre del Super Heroe </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nombreSuperHeroe" value="<%= superheroe.nombreSuperHeroe %>" type="text" placeholder="Ej. Iroman" required>
+                    <span id="error-nombreSuperHeroe" class="error" style="color:red"></span>
+                  </div>
+                  <div class="sm:col-span-4 justify-center">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="nombreReal"> Nombre Real del Super Heroe </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nombreReal" value="<%= superheroe.nombreReal %>" type="text" placeholder="Ej. Tony Stark" required>
+                    <span id="error-nombreReal" class="error" style="color:red"></span>
+                  </div>
+                </div>          
+              </div>
+              
+      
+                <div class="mb-4">
+                  <div class="grid grid-flow-row sm:grid-flow-col sm:grid-cols-3 gap-4">
+                      <div class="justify-center">
+                          <label class="block text-gray-700 text-sm font-bold mb-2"  for="edad"> Edad </label>
+                          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="edad" value="<%= superheroe.edad %>" type="text" placeholder="Numero" required>
+                          <span id="error-edad" class="error" style="color:red"></span>
+                      </div>
+                      <div class="justify-center">
+                          <label class="block text-gray-700 text-sm font-bold mb-2" for="creador"> Creador </label>
+                          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="creador" value="<%= superheroe.creador %>" type="text" placeholder="Programador Creador" required>
+                          <span id="error-creador" class="error" style="color:red"></span>
+                      </div>
+                      <div class="justify-center">
+                          <label class="block text-gray-700 text-sm font-bold mb-2" for="planeta"> Planeta de Origen </label>
+                          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="planetaOrigen" value="<%= superheroe.planetaOrigen %>" type="text" placeholder="Ej. Tierra" required>
+                          <span id="error-planetaOrigen" class="error" style="color:red"></span>
+                      </div>
+                  </div>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto"> Debilidad </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="debilidad" value="<%= superheroe.debilidad %>" type="text" placeholder="Ej. No tener armaudra" required>
+                <span id="error-debilidad" class="error" style="color:red"></span>
+              </div>
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto"> Poderes </label>
+                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="poderes" value="<%= superheroe.poderes %>" type="text" placeholder="Ej. Millonario" required>
+                  <span id="error-poderes" class="error" style="color:red"></span>
+              </div>
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto"> Aliados </label>
+                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="aliados" value="<%= superheroe.aliados %>" type="text" placeholder="Ej. Capitan America" required>
+                  <span id="error-aliados" class="error" style="color:red"></span>
+              </div>
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto"> Enemigos </label>
+                  <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="enemigos" value="<%= superheroe.enemigos %>" type="text" placeholder="Ej. Tanhos" required>
+                  <span id="error-enemigos" class="error" style="color:red"></span>
+              </div>
+              <br>
+              <div id="success-message" class="hidden p-4 mb-4 text-sm text-white rounded-xl bg-emerald-500 font-normal" role="alert">
+                <span class="font-semibold mr-2">Super Heroe Modificado Correctamente</span> Bien realizado, se agregó el SuperHeroe.
+              </div>
+              <br>
+              <div class="flex items-center justify-center gap-8">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="Modificar('<%= superheroe.id %>')"> Modificar </button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="window.location = '../../'"> Cancelar </button>
+              </div>      
+                
+            </form>        
+          </div>
+        </div> 
+
+        <script>
+            function Modificar(id) {
+            // Limpiar errores anteriores
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        
+            // Capturar valores del formulario
+            const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();
+            const nombreReal = document.getElementById('nombreReal').value.trim();
+            const edad = parseInt(document.getElementById('edad').value.trim());
+            const planetaOrigen = document.getElementById('planetaOrigen').value.trim();
+            const debilidad = document.getElementById('debilidad').value.trim();
+            const poderes = document.getElementById('poderes').value.trim().split(',').map(p => p.trim());
+            const aliados = document.getElementById('aliados').value.trim().split(',').map(a => a.trim());
+            const enemigos = document.getElementById('enemigos').value.trim().split(',').map(e => e.trim());
+            const creador = document.getElementById('creador').value.trim();
+        
+            let errores = [];
+        
+            // Validaciones
+            if (nombreSuperHeroe.length < 3 || nombreSuperHeroe.length > 60) {
+                errores.push({ field: "nombreSuperHeroe", message: "Debe tener entre 3 y 60 caracteres." });
+            }
+            if (nombreReal.length < 3 || nombreReal.length > 60) {
+                errores.push({ field: "nombreReal", message: "Debe tener entre 3 y 60 caracteres." });
+            }
+            if (isNaN(edad) || edad < 1 || edad > 150) {
+                errores.push({ field: "edad", message: "Debe ser un número válido entre 1 y 150." });
+            }
+            if (planetaOrigen.length < 3 || planetaOrigen.length > 60) {
+                errores.push({ field: "planetaOrigen", message: "Debe tener entre 3 y 60 caracteres." });
+            }
+            if (debilidad.length < 3 || debilidad.length > 60) {
+                errores.push({ field: "debilidad", message: "Debe tener entre 3 y 60 caracteres." });
+            }
+            if (!Array.isArray(poderes) || poderes.length < 2 || poderes.some(p => p.length < 3 || p.length > 60)) {
+                errores.push({ field: "poderes", message: "Debés ingresar al menos 2 poderes, y cada uno debe tener entre 3 y 60 caracteres." });
+            }
+            if (!Array.isArray(aliados) || aliados.length === 0 || aliados.some(a => a.length < 3 || a.length > 60)) {
+                errores.push({ field: "aliados", message: "Cada aliado debe tener entre 3 y 60 caracteres." });
+            }
+            if (!Array.isArray(enemigos) || enemigos.length === 0 || enemigos.some(e => e.length < 3 || e.length > 60)) {
+                errores.push({ field: "enemigos", message: "Cada enemigo debe tener entre 3 y 60 caracteres." });
+            }
+            if (creador.length < 3 || creador.length > 60) {
+                errores.push({ field: "creador", message: "Debe tener entre 3 y 60 caracteres." });
+            }
+        
+            // Mostrar errores si hay
+            if (errores.length > 0) {
+                errores.forEach(error => {
+                    const span = document.getElementById(`error-${error.field}`);
+                    if (span) span.textContent = error.message;
+                });
+                alert("Por favor, corregí los errores antes de guardar.");
+                return; // Detener el proceso
+            }
+        
+            // Si no hay errores, preguntar confirmación
+            if (!confirm("¿Estás seguro que querés Modificar este superhéroe?")) {
+                return; // El usuario canceló
+            }
+        
+            // Si confirmó, enviar la solicitud
+            const requestOptions = {
+                method:'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                /*nombreSuperHeroe: document.getElementById('nombreSuperHeroe').value,    
+                nombreReal: document.getElementById('nombreReal').value, 
+                edad: document.getElementById('edad').value,                 
+                planetaOrigen: document.getElementById('planetaOrigen').value,
+                debilidad: document.getElementById('debilidad').value,
+                poderes: document.getElementById('poderes').value,
+                aliados: document.getElementById('aliados').value,
+                enemigos: document.getElementById('enemigos').value,
+                creador: document.getElementById('creador').value,  */
+                    nombreSuperHeroe,
+                        nombreReal,
+                        edad,
+                        planetaOrigen,
+                        debilidad,
+                        poderes,  // ✅ Ahora es el array que ya habías separado antes
+                        aliados,  // ✅ Array también
+                        enemigos, // ✅ Array también
+                        creador    
+                
+            })
+            };
+            
+            fetch('/heroes/modificar-id/' + id, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                      const successMessage = document.getElementById('success-message');
+                successMessage.classList.remove('hidden');        
+                // Forzar un "reflow" para que la transición funcione
+                void successMessage.offsetWidth;
+                
+                successMessage.classList.remove('opacity-0');
+                successMessage.classList.add('opacity-100');
+                
+                setTimeout(() => {
+                    window.location.href = '../../';
+                }, 2000);
+                    } else if (data.status === 'error' && data.errors) {
+                        data.errors.forEach(error => {
+                            const errorSpan = document.getElementById(`error-${error.field}`);
+                            if (errorSpan) errorSpan.textContent = error.message;
+                        });
+                        alert("Errores desde el servidor. Verificá los campos.");
+                    } else {
+                        alert("Error inesperado.");
+                    }
+                });
+        }
+        
+</script>   
+</section>

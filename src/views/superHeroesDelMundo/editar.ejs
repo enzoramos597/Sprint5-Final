@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Editar el SuperHeroe</h1>
+    <div>
+        Nombre del Super Heroe: <input id="Nombre" value="<%= superheroeFormateado.Nombre %>"> <br>
+        Nombre Real: <input id="NombreReal" value="<%= superheroeFormateado["Nombre Real"] %>"> <br>
+        Edad: <input id="Edad" value="<%= superheroeFormateado.Edad %>"> <br>
+        Planeta de Origen: <input id="planetaorigen" value="<%= superheroeFormateado["Planeta de Origen"] %>"> <br>
+        Debilidad: <input id="Debilidad" value="<%= superheroeFormateado.Debilidad %>"> <br>
+        Poderes: <input id="Poderes" value="<%= superheroeFormateado.Poderes %>"> <br>
+        Aliados: <input id="Aliados" value="<%= superheroeFormateado.Aliados %>"> <br>
+        Enemigos: <input id="Enemigos" value="<%= superheroeFormateado.Enemigos %>"> <br>
+        Creador: <input id="Creador" value="<%= superheroeFormateado.Creador %>"> <br> <br>
+        <button onclick="Guardar('<%= superheroeFormateado.id %>')">Guardar</button>
+        <button onclick="window.location = '/heroes'">Cancelar</button>
+    </div>
+    <script>
+       function Guardar(id){
+        //console.log('Guardar ID:', id);
+        if (!confirm("¿Estás seguro que querés Modicar este superhéroe?")) {
+            return ; // Detiene la acción
+        }
+            const requestOptions = {
+                method:'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    body: JSON.stringify({ 
+                        nombreSuperHeroe,
+                        nombreReal,
+                        edad,
+                        planetaOrigen,
+                        debilidad,
+                        poderes,  // ✅ Ahora es el array que ya habías separado antes
+                        aliados,  // ✅ Array también
+                        enemigos, // ✅ Array también
+                        creador
+})
+                /*nombreSuperHeroe: document.getElementById('Nombre').value,    
+                nombreReal: document.getElementById('NombreReal').value, 
+                edad: document.getElementById('Edad').value,                 
+                planetaOrigen: document.getElementById('planetaorigen').value,
+                debilidad: document.getElementById('Debilidad').value,
+                poderes: document.getElementById('Poderes').value,
+                aliados: document.getElementById('Aliados').value,
+                enemigos: document.getElementById('Enemigos').value,
+                creador: document.getElementById('Creador').value, */               
+            })
+            
+            }
+            fetch('/api/heroes/modificar/' + id, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if(data.result == 'success'){
+                        window.location.href = '/heroes'
+                    }
+                    else{
+                        alert("Surgio un Error al actualizar la información")
+                    }
+                })
+       }
+    </script>
+</body>
+</html>

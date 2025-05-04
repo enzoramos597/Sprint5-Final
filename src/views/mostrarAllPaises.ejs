@@ -1,0 +1,97 @@
+<section>
+    <br>
+    <div class="text-shadow-md flex items-center justify-center text-4xl text-gray-500">
+        <h1>Lista de Paises </h1>
+    </div>
+    <br>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-100 dark:text-gray-500">
+            <thead class="text-xs text-blue uppercase bg-gray-900 border-b border-black-400 dark:text-black">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nombre Oficial 
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Capital
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Fronteras
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Área
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Población
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Zona Horarias
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Creador
+                    </th>
+                    <th scope="col" class="px-8 py-5">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <% paisesFormateados.forEach( (pais) => { %>
+            <tbody>
+                <tr class=" bg-gray-600 border-b border-blue-400 hover:bg-gray-400">
+                    <th scope="row" class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
+                        <%= pais["Nombre Oficial"] %>
+                    </th>
+                    <td class="px-6 py-4">                        
+                        <%= pais.Capital %>
+                    </td>
+                    <td class="px-6 py-4">                        
+                        <%= pais.Fronteras %>
+                    </td>   
+                    <td class="px-6 py-4">                        
+                        <%= pais.Área %>
+                    </td> 
+                    <td class="px-6 py-4">                        
+                        <%= pais.Población %>
+                    </td> 
+                    <td class="px-6 py-4">                        
+                        <%= pais.ZonaHoraria %>
+                    </td>   
+                    <td class="px-6 py-4">                        
+                        <%= pais.Creador %>
+                    </td> 
+                    <td class="px-8 py-5">                    
+                        <a  onclick="editar('<%= pais.id %>')" class="font-medium text-white hover:underline hover:cursor-pointer">Edit |</a>
+                        <a onclick="eliminar('<%= pais.id %>')" class="font-medium text-white hover:underline hover:cursor-pointer">Eliminar</a>
+                    </td>
+                </tr>            
+            </tbody>        
+            <% }) %>
+        </table>
+        <br>
+    </div>
+   <script>
+        function editar(id){
+                window.location.href = '/heroes/modificar/' + id;
+            }
+        function eliminar(id){
+                if (!confirm("¿Estás seguro que querés eliminar este País? Esta acción no se puede deshacer.")) {
+                    return;
+                }
+                const requestOptions = {
+                    method:'delete',               
+                }
+                fetch('/eliminarPais/' + id, requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        if(data.result == 'success'){
+                            alert("Pais eliminado con Exito.")
+                            window.location.href = '/'
+                        }
+                        else{
+                            alert("Surgio un Error al Eliminar el País")
+                        }
+                    })
+            }
+    </script>
+        
+    </section>
