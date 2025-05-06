@@ -35,9 +35,6 @@ router.post('/heroes/nuevo/agregarheroes', sHeroesValidationRules(), validationH
 router.post('/agregarPais', paisValidationRules(), validationHandler, agregarPaisController);
 router.put('/modificarPais/:id', modificarPaisController )
 router.put('/heroes/modificar-id/:id',sHeroesValidationRules(), validationHandler, modificarSuperHeroesController);
-/*router.put('/heroes/modificar-id/:id', (req, res) => {
-    res.render('modificarSuperHeroe', {title: "Modificar Super Heroe" }); // sin .ejs
-});*/
 router.delete('/heroes/eliminar/id/:id', eliminarSuperHeroesController);
 router.delete('/eliminarPais/:id', eliminarPaisController);
 

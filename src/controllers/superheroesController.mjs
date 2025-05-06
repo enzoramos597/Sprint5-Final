@@ -1,7 +1,7 @@
 //Implementa el controlador para gestionar solicitudes HTTP, llamando a services
 //Y utilizando las vistas para presentar los datos
 
-import { join } from 'path';
+
 import {
     obtenerSuperheroePorId,
     obtenerTodosLosSuperheroes,

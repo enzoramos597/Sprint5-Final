@@ -53,8 +53,6 @@ export async function modificarPaisService(id, updatePais){
     return await SuperHeroRepository.updatePaisRepository(id, updatePais);
 }
 
-
-
 export async function eliminarSuperHereoPorId(id) {
     return await SuperHeroRepository.eliminarPorId(id);
 }

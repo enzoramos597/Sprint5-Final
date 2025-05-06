@@ -1,9 +1,9 @@
 <section>
         <br>
         <div class="container ml-auto mr-auto flex flex-wrap items-start mt-0">
-      
+          <br>
           <div class="w-full pl-2 pr-2 mb-4 mt-4">
-            <h1 class="text-3xl font-extrabold text-center"> Modificar Super Heroe - Completar los Campos </h1>
+            <h1 class="text-3xl font-extrabold text-center"> Modificar País - Completar los Campos </h1>
           </div>
           
         </div> 
@@ -66,17 +66,19 @@
                 <div id="success-message" class="hidden p-4 mb-4 text-white rounded bg-green-600">
                   País Modificado correctamente.
                 </div>
-          
+                <br>
                 <!-- Botones -->
                 <div class="flex items-center justify-center gap-8">
                   <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="Modificar('<%= paisSeleccionado.id %>')"> Modificar </button>
                   <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="window.location = '/../'"> Cancelar </button>
                   <br>
                 </div>
+                <br>
               </form>       
           </div>
+          <br>
         </div> 
-
+        <br>
         <script>
             function Modificar(id) {
             // Limpiar errores anteriores

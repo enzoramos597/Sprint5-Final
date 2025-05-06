@@ -32,9 +32,13 @@ class SuperHeroRepository extends IRepository {
         return await superHero.find();
     }
 
-    async obtenerTodosLosPaisesRepository(){
-        return await Paises.find({ creador: "Enzo Ramos"});
+    async obtenerTodosLosPaisesRepository() {
+        return await Paises.find({ 
+            creador: "Enzo Ramos",
+            "languages.spa": "Spanish"
+        });
     }
+    
 
     async agregarNuevoSuperHeroeEnzo(agregarNuevoSP) {
         const {nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos, creador, createdAt} = agregarNuevoSP;
