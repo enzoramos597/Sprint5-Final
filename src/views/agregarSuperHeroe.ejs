@@ -75,7 +75,7 @@
         <br>
         <div class="flex items-center justify-center gap-8">
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="Guardar()"> Agregar </button>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="window.location = '../../'"> Cancelar </button>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="window.location = '/../'"> Cancelar </button>
         </div>      
           
       </form>        
@@ -86,7 +86,9 @@
   <script>
     function Guardar() {
     // Limpiar errores anteriores
+    //document.querySelectorAll(".error").forEach(el => el.textContent = "");
     document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
 
     // Capturar valores del formulario
     const nombreSuperHeroe = document.getElementById('nombreSuperHeroe').value.trim();

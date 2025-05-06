@@ -43,8 +43,8 @@ app.get('/contact', (req, res) =>{
 });
 
 //Ruta para agregar Super Heroe
-app.get('/agregarSuperHeroe', (req, res) => {
-    res.render('agregarSuperHeroe', {title: 'Agregar Super Heroe'});
+app.get('/agregarPais', (req, res) => {
+    res.render('agregarPais', {title: 'Agregar País'});
 });
 
 //Configuración de rutas

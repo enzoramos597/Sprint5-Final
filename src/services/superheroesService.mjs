@@ -7,6 +7,11 @@ export async function obtenerSuperheroePorId(id) {
     return await SuperHeroRepository.obtenerPorId(id);
 }
 
+export async function obtenerPaisIdServicio(id) {
+    return await SuperHeroRepository.obtenerPaisIdRepository(id);
+}
+
+
 export async function obtenerTodosLosSuperheroes() { 
     return await SuperHeroRepository.obtenerTodos();
 } 
@@ -30,6 +35,12 @@ export async function agregarNuevoSuperHeroe(agregarNuevoSP) {
     return await SuperHeroRepository.agregarNuevoSuperHeroeEnzo(agregarNuevoSP);
 }
 
+export async function agregarPaisServicio(agregarPaisAll) {
+    return await SuperHeroRepository.agregarPaisRepository(agregarPaisAll);
+}
+
+
+
 export async function modificarSuperHeroeporEdad(id, atributo, valor) {
     return await SuperHeroRepository.modificarSuperHeroeporEdad(id, atributo, valor);
 }
@@ -37,6 +48,12 @@ export async function modificarSuperHeroeporEdad(id, atributo, valor) {
 export async function modificarSuperHeroeService(id, updateSP){
     return await SuperHeroRepository.updateRepositorySuperHereo(id, updateSP);
 }
+
+export async function modificarPaisService(id, updatePais){
+    return await SuperHeroRepository.updatePaisRepository(id, updatePais);
+}
+
+
 
 export async function eliminarSuperHereoPorId(id) {
     return await SuperHeroRepository.eliminarPorId(id);

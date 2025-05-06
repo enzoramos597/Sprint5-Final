@@ -23,6 +23,10 @@ class SuperHeroRepository extends IRepository {
     async obtenerPorId(id) {;  //Funciona
         return await superHero.findById(id)
     }
+    //Obtener Paises por ID
+    async obtenerPaisIdRepository(id) {;  //Funciona
+        return await Paises.findById(id)
+    }
 
     async obtenerTodos() {  //Funciona
         return await superHero.find();
@@ -50,6 +54,23 @@ class SuperHeroRepository extends IRepository {
         const guardarSuperHeroe = await newSuperHeroe.save();
         return guardarSuperHeroe;
     };
+
+    async agregarPaisRepository(agregarPaisAll) {        
+        const {name: {nativeName: { spa: { official: nombreOficial }}}, capital, borders, area, population, timezones,creador} = agregarPaisAll;
+        const newPais = new Paises({
+            name: {nativeName: { spa: { official: nombreOficial } }}, 
+            capital, 
+            borders, 
+            area, 
+            population, 
+            timezones,
+            creador
+        });
+        
+        const guardarPais = await newPais.save();
+        return guardarPais;
+    };
+    
     
     async updateRepository (nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos, creador){
         //const {nombreSuperHeroe, nombreReal, edad, planetaOrigen, debilidad, poderes, aliados, enemigos, creador, createdAt} = updateSP;
@@ -98,8 +119,18 @@ class SuperHeroRepository extends IRepository {
             console.log('Ver Update Super Heroe', updateSuperHeroe);
             return updateSuperHeroe;
         }
+    
+    //Update Pais
+    async updatePaisRepository(id, updatePais) {
+        const updatePais1 = await Paises.findByIdAndUpdate(
+            id,
+            { $set: updatePais },
+            { new: true }
+        );
+        console.log('Ver Update Pais', updatePais1);
+            return updatePais1;
+    }    
         
-
     async modificarSuperHeroeporEdad (id, atributo, valor){
         return await superHero.updateOne(
             { _id: id},

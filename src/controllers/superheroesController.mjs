@@ -10,6 +10,9 @@ import {
     agregarNuevoSuperHeroe, modificarSuperHeroeporEdad,
     eliminarSuperHereoPorId,
     eliminarSuperHeroeNombre,
+    obtenerPaisIdServicio,
+    modificarPaisService,
+    agregarPaisServicio,
     eliminarPaisIdServicio,
     obtenerTodosLosPaisesServices,
     modificarSuperHeroeService,
@@ -56,9 +59,78 @@ export async function obtenerSuperheroePorIdController(req, res) {
                 error: error.message
             });
         }
-    }
-    
+}
 
+export async function obtenerPaisesIdController(req, res) {
+    try {
+        const { id } = req.params;
+        console.log(`Traerme el ID del Pais:`, id);
+
+        const paisSeleccionado = await obtenerPaisIdServicio(id);
+        console.log('El Pais es: ', paisSeleccionado);
+
+        if (!paisSeleccionado) {
+            return res.status(404).send({ mensaje: 'Pais no encontrado' });
+        }
+
+        res.render('modicarPais', {
+            title: 'Modificar País',
+            paisSeleccionado,  //  Pasamos el objeto superhéroe directamente
+            navbarLinks: [
+                { text: 'Inicio', href: '/', icon: '/icons/home.svg' },
+                { text: 'Acerca de', href: '/about', icon: '/icons/info.svg' },
+                { text: 'Contacto', href: '/contact', icon: '/icons/contact.svg' }
+            ]
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            mensaje: 'Error al obtener el País',
+            error: error.message
+        });
+    }
+}
+    
+export async function modificarPaisController(req, res){
+    try {
+        const id = req.params.id;
+        const updatePais = req.body; // 🔧 Importante
+        console.log('El ID de Modificar es:', id);
+        console.log('Entra en el Controller:', updatePais);
+
+        const paisModificado = await modificarPaisService(id, updatePais);
+        if (!paisModificado) {
+            return res.status(404).send({ mensaje: "No se pudo actualizar el País" });
+        }
+
+
+        console.log('Devuelve el valor de Return Repository', paisModificado);
+        const paisesFormateados = {
+          id: paisModificado._id,
+          name: {
+            nativeName: {
+              spa: {
+                official: paisModificado.nombreOficial,
+              },
+            },
+          },
+          capital: paisModificado.capital,
+          borders: paisModificado.borders,
+          area: paisModificado.area,
+          population: paisModificado.population,
+          timezones: paisModificado.timezones,
+          creador: paisModificado.creador,
+        };
+
+        return res.json({ result: 'success', paisesFormateados });
+    } catch (error) {
+        return res.status(500).send({
+            mensaje: "Error al actualizar el País",
+            error: error.message
+        });
+    }
+}
 export async function obtenerSuperheroePorIdControllerFunciona(req, res) {
     try {
         const {id} = req.params;
@@ -203,32 +275,27 @@ export async function agregarSuperHeroesController(req, res) {
     }
 }
 
-/*export async function modificarSuperHeroesController(req, res){
-    try{
-    const id = req.params.id;
-    const updateSP = req.params;
+export async function agregarPaisController(req, res) {
+    try {
+        const agregarPaisAll = req.body;
+        console.log('Ver el Pais: ', agregarPaisAll);
+        const paiscreado = await agregarPaisServicio(agregarPaisAll);
+        console.log(paiscreado);
+        if (paiscreado.length === 0) {
+            return res.status(404).send(
+                { mensaje: 'No se creo el País' });
+        }            
+        //const paisesFormateados = renderizarListaPaises(paiscreado);
 
-
-    
-    console.log('Traigo el Super Heroe',updateSP);
-    const superHeroemodificado = await modificarSuperHeroeService(id, updateSP);
-    //console.log('Mostrar El SuperHereo', superHeroemodificado);
-    if (superHeroemodificado.length === 0){
-        return res.status(404).send({ mensaje: "No se pudo actualizar el superhéroe" });
-    }
-
-    console.log('Entrara por aqui');
-   
-    console.log('Aqui estan formateados:', superheroeFormateado)
-    res.json( {result: 'success', superheroeFormateado});
-    //res.status(200).json(superheroeFormateado);
-    console.log('Aqui modifico el SuperHeroe')
+        //const superheroesFormateado = renderizarSuperheroe(superheroeCreado);       
+        res.json({result: 'success'});        
     } catch (error) {
-        res.status(500).send({mensaje: "Error al actualizar el superhéroe",
-        error: error.message,
-      });
+        res.status(500).send(
+            { mensaje: 'Error al crear el País',
+            error: error.message });
     }
-}*/
+}
+
 
 export async function modificarSuperHeroesController(req, res){
     try {
@@ -389,7 +456,7 @@ export async function manejarTraerPaises(req, res) {
         //fs.writeFileSync('paisesHispanohablantes.txt', JSON.stringify(paises, null, 2));
         console.log(paises);
         // (opcional) limpiar la colección antes de insertar
-        await Paises.deleteMany({});
+        //await Paises.deleteMany({});
         //Insertar en MongoDB
         const resultado = await Paises.insertMany(paises);
         res.json(paises); // envía JSON al navegador
@@ -398,27 +465,5 @@ export async function manejarTraerPaises(req, res) {
     }
 }
 
-/*export async function insertarPaisesController(req, res) {
-    try {
-        // Leer el archivo .txt
-        const contenido = fs.readFileSync('paisesHispanohablantes.txt', 'utf-8');
-        const datos = JSON.parse(contenido); // contiene { cantidad, paises }
 
-        const paises = datos.paises;
-        console.log(paises);
-        // (opcional) limpiar la colección antes de insertar
-        //await Paises.deleteMany({});
-
-        //Insertar en MongoDB
-        const resultado = await Paises.insertMany(paises);
-
-        res.json({
-            mensaje: `Se insertaron ${resultado.length} países desde el archivo`,
-            paises: resultado
-        });
-    } catch (error) {
-        console.error('Error al insertar desde archivo:', error);
-        res.status(500).json({ error: 'Error al insertar los países desde el archivo' });
-    }
-}*/
 

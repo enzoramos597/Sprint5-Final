@@ -1,0 +1,183 @@
+<section>
+<div class="container mx-auto">
+  <div class="text-center mb-6">
+    <h1 class="text-3xl font-extrabold">Agregar País - Completar los Campos</h1>
+  </div>
+
+  <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+    <form>
+      <!-- Nombre Oficial -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Nombre Oficial en Español</label>
+  <input type="text" id="nombreOficial" class="w-full border rounded p-2" placeholder="Ej. República Argentina">
+  <span id="error-nombreOficial" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Capital -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Capital (separadas por coma)</label>
+  <input type="text" id="capital" class="w-full border rounded p-2" placeholder="Ej. Buenos Aires">
+  <span id="error-capital" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Fronteras -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Códigos de Frontera (3 letras, separados por coma)</label>
+  <input type="text" id="borders" class="w-full border rounded p-2" placeholder="Ej. BRA,CHL,URY">
+  <span id="error-borders" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Área -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Área (en km²)</label>
+  <input type="number" id="area" class="w-full border rounded p-2" placeholder="Ej. 2780400">
+  <span id="error-area" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Población -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Población</label>
+  <input type="number" id="population" class="w-full border rounded p-2" placeholder="Ej. 46000000">
+  <span id="error-population" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Zonas Horarias -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Zonas Horarias</label>
+  <input type="text" id="timezones" class="w-full border rounded p-2" placeholder="Ej. UTC−03:00">
+  <span id="error-timezones" class="text-red-500 text-sm error"></span>
+</div>
+
+<!-- Creador -->
+<div class="mb-4">
+  <label class="block font-bold mb-2">Creador</label>
+  <input type="text" id="creador" class="w-full border rounded p-2" placeholder="Tu nombre">
+  <span id="error-creador" class="text-red-500 text-sm error"></span>
+</div>
+
+
+      <div id="success-message" class="hidden p-4 mb-4 text-white rounded bg-green-600">
+        País agregado correctamente.
+      </div>
+
+      <!-- Botones -->
+      <div class="flex items-center justify-center gap-8">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="Guardar()"> Agregar </button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="window.location = '/../'"> Cancelar </button>
+        <br>
+      </div>
+    </form>
+    <br>
+  </div>
+</div>
+
+  <script>  
+    function Guardar() {
+      // Limpiar errores anteriores
+      document.querySelectorAll(".error").forEach(el => el.textContent = "");
+      // Capturar valores del formulario
+      const nombreOficial = document.getElementById('nombreOficial').value.trim();
+      const capital = document.getElementById('capital').value.trim().split(',').map(c => c.trim());
+      const borders = document.getElementById('borders').value.trim().split(',').map(b => b.trim());
+      const areaStr = document.getElementById('area').value.trim();
+      const populationStr = document.getElementById('population').value.trim();
+      const timezones = document.getElementById('timezones').value.trim().split(',').map(t => t.trim());
+      const creador = document.getElementById('creador').value.trim();
+  
+      const area = parseFloat(areaStr);
+      const population = parseInt(populationStr);
+  
+      let errores = [];
+  
+      // Validaciones
+      if (!nombreOficial || typeof nombreOficial !== 'string' || nombreOficial.length < 3 || nombreOficial.length > 90 || nombreOficial !== nombreOficial.trim()) {
+        errores.push({ field: 'nombreOficial', message: 'El nombre oficial debe tener entre 3 y 90 caracteres, sin espacios al inicio/final.' });
+      }
+  
+      if (!Array.isArray(capital) || capital.some(c => typeof c !== 'string' || c.length < 3 || c.length > 90 || c !== c.trim())) {
+        errores.push({ field: 'capital', message: 'Cada capital debe ser un string entre 3 y 90 caracteres, sin espacios al inicio/final.' });
+      }
+  
+      if (!Array.isArray(borders) || borders.some(b => !/^[A-Z]{3}$/.test(b))) {
+        errores.push({ field: 'borders', message: 'Cada frontera debe tener exactamente 3 letras mayúsculas, sin espacios.' });
+      }
+  
+      if (isNaN(area) || area <= 0 || areaStr !== areaStr.trim()) {
+        errores.push({ field: 'area', message: 'El área debe ser un número positivo, sin espacios.' });
+      }
+  
+      if (isNaN(population) || population <= 0 || populationStr !== populationStr.trim()) {
+        errores.push({ field: 'population', message: 'La población debe ser un número positivo, sin espacios.' });
+      }
+  
+      if (!Array.isArray(timezones) || timezones.some(tz => typeof tz !== 'string' || tz.length < 3 || tz.length > 60)) {
+        errores.push({ field: 'timezones', message: 'Cada zona horaria debe ser un string entre 3 y 60 caracteres.' });
+      }
+  
+      if (!creador || typeof creador !== 'string' || creador.length < 3 || creador.length > 60 || creador !== creador.trim()) {
+        errores.push({ field: 'creador', message: 'El creador debe tener entre 3 y 60 caracteres, sin espacios al inicio/final.' });
+      }
+  
+      if (errores.length > 0) {
+        errores.forEach(error => {
+          const span = document.getElementById(`error-${error.field}`);
+          if (span) span.textContent = error.message;
+        });
+        alert('Por favor, corregí los errores antes de guardar.');
+        return;
+      }
+  
+      if (!confirm('¿Estás seguro que querés agregar este país?')) return;
+  
+      const body = {
+        name: {
+          nativeName: {
+            spa: {
+              official: nombreOficial
+            }
+          }
+        },
+        capital,
+        borders,
+        area,
+        population,
+        timezones,
+        creador
+      };
+  
+      fetch('/agregarPais', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.result === 'success') {
+            const successMessage = document.getElementById('success-message');
+            successMessage.classList.remove('hidden');
+            void successMessage.offsetWidth;
+  
+            successMessage.classList.remove('opacity-0');
+            successMessage.classList.add('opacity-100');
+  
+            setTimeout(() => {
+              window.location.href = '/../';
+            }, 2000);
+          } else if (data.status === 'error' && data.errors) {
+            data.errors.forEach(error => {
+              const errorSpan = document.getElementById(`error-${error.field}`);
+              if (errorSpan) errorSpan.textContent = error.message;
+            });
+            alert("Errores desde el servidor. Verificá los campos.");
+          } else {
+            alert("Error inesperado.");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Ocurrió un error inesperado.");
+        });
+    }
+  </script>
+  
+</section>
